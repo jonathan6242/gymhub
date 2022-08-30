@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express();
 const cors = require('cors')
+const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(cors({
@@ -52,4 +53,8 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 })
 
-app.listen(5000, () => console.log('Listening on Port 5000'))
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('public/build'))
+}
+
+app.listen(PORT, () => console.log(`Listening on Port ${PORT}`))
